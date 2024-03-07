@@ -12,7 +12,7 @@ jobs:
   makeTagandRelease:
     runs-on: ubuntu-latest
     outputs :
-      tag_name : ${{steps.create_tag.outputs.new_tag}}
+      tag_name : ${{ steps.create_tag.outputs.new_tag }}
     steps:
       - uses: actions/checkout@v4
       - name: Create Tag
@@ -49,7 +49,7 @@ jobs:
         run : |
           echo "OWNER_LC=${OWNER,,}" >> ${GITHUB_ENV}}
         env :
-          OWNER: "${{github.repository_owner}}"
+          OWNER: '${{github.repository_owner}}'
       - name: application-secret.yml 생성
         env:
           ACTIONS_STEP_DEBUG: true
@@ -61,8 +61,8 @@ jobs:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ env.OWNER_LC }}/deploys_test:${{ needs.makeTagAndRelease.outputs.tag_name }},
-            ghcr.io/${{ env.OWNER_LC }}/deploys_test:latest
+            ghcr.io/${{ env.OWNER }}/deploys_test:${{ needs.makeTagAndRelease.outputs.tag_name }},
+            ghcr.io/${{ env.OWNER }}/deploys_test:latest
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@v1.0.3
         with:
