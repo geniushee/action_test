@@ -34,6 +34,7 @@ jobs:
   buildImageAndPush:
     name: 도커 이미지 빌드와 푸쉬
     runs-on: ubuntu-latest
+    needs: makeTagandRelease
     steps:
       - uses: actions/checkout@v4
       - name: docker buildx 설치
@@ -53,7 +54,7 @@ jobs:
         env:
           ACTIONS_STEP_DEBUG: true
           APPLICATION_SECRET: ${{secrets.APPLICATION_SECRET_YML}}
-        run: echo "$APPLICATION_SECRET" >> src/main/resource/application-secret.yml
+        run: echo "$APPLICATION_SECRET" >> src/main/resources/application-secret.yml
       - name: 빌드앤 푸쉬
         uses: docker/build-push-action@v3
         with:
